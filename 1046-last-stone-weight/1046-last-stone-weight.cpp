@@ -9,7 +9,7 @@ public:
            maxh.pop();
            int second = maxh.top();
            maxh.pop();
-           if(one>second and one!=second)
+           if(one>second)
                maxh.push(one-second);
         }
         return maxh.size()!=0?maxh.top():0;    
