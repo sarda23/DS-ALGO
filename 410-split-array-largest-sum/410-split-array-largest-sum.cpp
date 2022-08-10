@@ -17,7 +17,6 @@ public:
      // nums -- weights , m == days 
     // same questions as -- book allocations   and leetcode 1011    
     int splitArray(vector<int>& weights, int days) {
-        
         int n=weights.size();
         if(n==1)
             return 0;
