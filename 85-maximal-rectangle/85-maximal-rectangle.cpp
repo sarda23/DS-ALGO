@@ -1,57 +1,59 @@
 class Solution {
 public:
-    int mah(vector<int> arr){
-        stack<pair<int,int>> s,ss;
-        vector<int> left,right,res;
-        int n=arr.size();
-        for(int i=0;i<n;i++){
-            if(s.size()==0)
-              left.push_back(-1);
-            else if(s.size()>0&&s.top().first<arr[i])
-              left.push_back(s.top().second);
-            else if(s.size()>0&&s.top().first>=arr[i]){
-                while(s.size()>0&&s.top().first>=arr[i])
-                   s.pop();
-                if(s.size()==0)
-                  left.push_back(-1);
-                else
-                  left.push_back(s.top().second);
-            }
-            s.push({arr[i],i});
-        }
-        // nsr
+    int mah(vector<int>v){
+        int n=v.size();
+        stack<pair<int,int>>s,ss;
+        vector<int>left,right,res(n);
+        // first lets cal the NSR
         for(int i=n-1;i>=0;i--){
-            if(ss.size()==0)
-              right.push_back(n);
-            else if(ss.size()>0&&ss.top().first<arr[i])
-              right.push_back(ss.top().second);
-            else if(ss.size()>0&&ss.top().first>=arr[i]){
-                while(ss.size()>0&&ss.top().first>=arr[i])
-                   ss.pop();
-                if(ss.size()==0)
-                  right.push_back(n);
+            if(s.size()==0)
+                right.push_back(n);
+            else if(s.size()>0 and s.top().first<v[i])
+                right.push_back(s.top().second);
+            else if(s.size()>0 and s.top().first>=v[i]){
+                while(s.size()>0 and s.top().first>=v[i])
+                    s.pop();
+                if(s.size()==0)
+                    right.push_back(n);
                 else
-                  right.push_back(ss.top().second);
+                    right.push_back(s.top().second);
             }
-            ss.push({arr[i],i});
+             s.push({v[i],i});   
         }
         reverse(right.begin(),right.end());
-        for(int i=0;i<n;i++)
-            res.push_back((right[i]-left[i]-1)*arr[i]);
+        // now we need to cal the NSL
+          for(int i=0;i<n;i++){
+            if(ss.size()==0)
+                left.push_back(-1);
+            else if(ss.size()>0 and ss.top().first<v[i])
+                left.push_back(ss.top().second);
+            else if(ss.size()>0 and ss.top().first>=v[i]){
+                while(ss.size()>0 and ss.top().first>=v[i])
+                    ss.pop();
+                if(ss.size()==0)
+                    left.push_back(-1);
+                else
+                    left.push_back(ss.top().second);
+            }
+             ss.push({v[i],i});   
+        }
+        for(int i=0;i<n;i++){
+            res[i]=(right[i]-left[i]-1)*v[i];
+        }
         return *max_element(res.begin(),res.end());
     }
-    int maximalRectangle(vector<vector<char>>& M) {
-        vector<int> v;
-        int n=M.size(),m=M[0].size();
+    int maximalRectangle(vector<vector<char>>& matrix){
+        int n=matrix.size(),m=matrix[0].size();
+        vector<int>v;
         for(int i=0;i<m;i++)
-           v.push_back(M[0][i]-'0');
-        int mx=mah(v); 
+            v.push_back(matrix[0][i]-'0');
+        int mx=mah(v);
         for(int i=1;i<n;i++){
             for(int j=0;j<m;j++){
-                if(M[i][j]=='0')
-                  v[j]=0;
+                if(matrix[i][j]=='0')
+                    v[j]=0;
                 else
-                  v[j]+=M[i][j]-'0';
+                    v[j]+=matrix[i][j]-'0';
             }
             mx=max(mx,mah(v));
         }
