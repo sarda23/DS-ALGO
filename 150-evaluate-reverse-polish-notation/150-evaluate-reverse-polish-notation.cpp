@@ -18,10 +18,10 @@ public:
                     ans=el1+el2;
                 else if(t=="-")
                     ans=el1-el2;
-                s.push(to_string(ans)+"");
+                s.push(to_string(ans));
             }
             else
-                s.push(t);
+                s.push(t); // operand 
         }
         return stoi(s.top());
     }
