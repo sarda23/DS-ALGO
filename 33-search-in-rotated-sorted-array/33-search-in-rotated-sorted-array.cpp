@@ -31,20 +31,13 @@ public:
         return -1;
     }
     int search(vector<int>& nums, int target) {
-        int index=bs(nums,0,nums.size()-1);
+        int index=bs(nums,0,nums.size()-1); // finding the minimum element in a rotated sorted array
         cout<<index;
         if(nums[index]==target)
             return index;
         int a=solve(nums,target,0,index-1);
         int b=solve(nums,target,index+1,nums.size()-1);
-        if(a==-1 and b==-1)
-            return -1;
-        else{
-            if(a==-1)
-                return b;
-            else
-                return a;
-        }
-        return 0;
+        return a==-1?b:a;
+        
     }
 };
