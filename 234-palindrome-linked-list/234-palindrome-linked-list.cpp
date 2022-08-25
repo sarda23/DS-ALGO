@@ -38,13 +38,13 @@ public:
             return true;
         ListNode* midnode=middlenode(head);
         //reverse the 2nd half of the list
-        ListNode* newhead=midnode->next;
+        ListNode* newhead=midnode->next; // taking the 1st mid
         midnode->next=NULL;  
         newhead=reverse(newhead);
         
         ListNode* c1=head,*c2=newhead; 
         bool res=true;
-        while(c2!=NULL){
+        while(c1!=NULL and c2!=NULL){          // only c2 is required
             if(c1->val!=c2->val){
                 res=false;
                 break;
