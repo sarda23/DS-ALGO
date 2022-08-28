@@ -11,20 +11,20 @@
  */
 class Solution {
 public:
-    void solve(TreeNode* root,int &maxdepth,int &leftval,int depth){
+    void solve(TreeNode* root,int &maxdepth,int &ans,int depth){
         if(root==NULL)
-            return;
-        solve(root->left,maxdepth,leftval,depth+1);
-        solve(root->right,maxdepth,leftval,depth+1);
-        if(depth>maxdepth){
+            return ;
+        solve(root->left,maxdepth,ans,depth+1);
+        solve(root->right,maxdepth,ans,depth+1);
+        if(maxdepth<depth){
             maxdepth=depth;
-            leftval=root->val;
+            ans=root->val;
         }
     }
-    int findBottomLeftValue(TreeNode* root) {
-        int maxdepth=0;
-        int leftval=root->val;
-        solve(root,maxdepth,leftval,0);
-        return leftval;
+    int findBottomLeftValue(TreeNode* root){
+        
+        int ans=root->val,maxdepth=0;
+        solve(root,maxdepth,ans,0);
+        return ans;
     }
 };
