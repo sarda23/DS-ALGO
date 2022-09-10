@@ -1,19 +1,23 @@
 class Solution {
 public:
     // monotonic decreasing stack 
-    // neetcode
+    // coding decoded
     bool find132pattern(vector<int>& nums){
-        stack<pair<int,int>>s;
-        int curmin=nums[0];
+        stack<int>s;
+        int secondmax=INT_MIN;
         
-        for(int i=1;i<nums.size();i++){
-            while(!s.empty() and nums[i]>=s.top().first)
-                s.pop();
-            if(!s.empty() and nums[i]>s.top().second)
+        for(int i=nums.size()-1;i>=0;i--){
+            
+            if(nums[i]<secondmax)
                 return true;
             
-            s.push({nums[i],curmin});
-            curmin=min(curmin,nums[i]);
+            while(!s.empty() and nums[i]>s.top()){
+                
+                secondmax=max(secondmax,s.top());
+                s.pop();
+            }
+            // all the peak element
+            s.push(nums[i]);
         }
         return false;
     }
