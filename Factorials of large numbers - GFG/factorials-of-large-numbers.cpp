@@ -8,8 +8,8 @@ using namespace std;
 
 class Solution {
 public:
-
-    void multiply(vector<int>& nums, int &size, int &multiplier) {
+    int size;
+    void multiply(vector<int>& nums, int &multiplier) {
         int carry = 0;
     
         for(int i = 0; i<size; i++) {
@@ -30,12 +30,13 @@ public:
         // code here
         vector<int> nums(10000, 0);
         nums[0] = 1;
-        int size = 1;
+        size = 1;
         int fact = N;
     
     
         for(int multiplier = 2; multiplier<=fact; multiplier++)
-            multiply(nums, size, multiplier);
+            multiply(nums,multiplier);
+        
         
         vector<int> result;
         for(int i = size-1; i>=0 ; i--)
