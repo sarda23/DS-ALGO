@@ -19,6 +19,7 @@ public:
             
             if(mp[num] == 0)
                 continue;
+            // ya toh twice hai hi nahi ya toh uska freq 0 hai dono cases me possible nahi hai
             if(mp.find(twice) == mp.end() or mp[twice] == 0){
                 return {};
             }
