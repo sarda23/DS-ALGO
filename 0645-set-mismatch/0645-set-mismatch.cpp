@@ -2,21 +2,26 @@ class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
         int n = nums.size();
-        unordered_map<int,int>mp;
         
-        for(int &x:nums)
-            mp[x]++;
-        int miss;
-        for(int i=1;i<=n;i++){
-            if(mp.find(i) == mp.end())
-                miss = i;
+        int dup  = -1;
+        int miss = -1;
+        
+        // find dup
+        for(int i=0;i<n;i++){
+            if(nums[abs(nums[i]) - 1] < 0)
+                dup  = abs(nums[i]);
             else
-                mp[i]--;
+                nums[abs(nums[i]) - 1] *= -1;
         }
-        int dup;
-        for(auto &it:mp)
-            if(it.second > 0)
-                dup = it.first;
+        
+        // missing num
+        
+        for(int i =0;i<n;i++){
+            if(nums[i] > 0){
+                miss = i + 1;
+                break;
+            }
+        }
         
         return {dup,miss};
     }
