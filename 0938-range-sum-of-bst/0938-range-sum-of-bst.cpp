@@ -11,17 +11,21 @@
  */
 class Solution {
 public:
-    int sum = 0;
-    void solve(TreeNode* root,int low,int high){
+    
+    int solve(TreeNode* root,int low,int high){
         if(root==NULL)
-            return;
-        if(root->val >=low and root->val<=high)
-            sum+=root->val;
-        solve(root->left,low,high);
-        solve(root->right,low,high);
+            return 0;
+        if(root->val >=low and root->val<=high){
+            return root->val + solve(root->left,low,high) + solve(root->right,low,high);
+        }
+        if(root->val<low)
+            return solve(root->right,low,high);
+        if(root->val>high)
+            return solve(root->left,low,high);
+        return 0;
     }
     int rangeSumBST(TreeNode* root, int low, int high) {
-        solve(root,low,high);
-        return sum;
+        return solve(root,low,high);
+        
     }
 };
