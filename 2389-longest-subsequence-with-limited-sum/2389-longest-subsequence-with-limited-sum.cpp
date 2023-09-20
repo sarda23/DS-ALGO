@@ -1,5 +1,6 @@
 class Solution {
 public:
+    /*
     int bs(vector<int>&nums,int n,int target){
         int l=0,r=n-1;
         int mid;
@@ -18,6 +19,7 @@ public:
         }
         return res_idx+1;
     }
+    */
     vector<int> answerQueries(vector<int>& nums, vector<int>& queries) {
         int n = nums.size();
         sort(begin(nums),end(nums));
@@ -28,8 +30,9 @@ public:
             nums[i] += nums[i-1];
         
         for(int &q:queries){
-            int count = bs(nums,n,q);
+            //int count = bs(nums,n,q);
             
+            int count = upper_bound(begin(nums),end(nums),q) - begin(nums);
             res.push_back(count);
         }
         return res;
