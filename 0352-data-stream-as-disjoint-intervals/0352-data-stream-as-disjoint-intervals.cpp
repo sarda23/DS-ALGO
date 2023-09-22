@@ -1,6 +1,6 @@
 class SummaryRanges {
 public:
-    unordered_set<int>st;
+    set<int>st;
     SummaryRanges() {
         st.clear();
     }
@@ -10,9 +10,10 @@ public:
     }
     
     vector<vector<int>> getIntervals() {
+        // already sorted set me aayega as ordered_set
         vector<int>nums(begin(st),end(st));
         
-        sort(begin(nums),end(nums));
+       
         
         vector<vector<int>>res;
         int n = nums.size();
