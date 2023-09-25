@@ -1,17 +1,20 @@
 class Solution {
 public:
     char findTheDifference(string s, string t) {
-        unordered_map<char,int>mp;
+        int sum_s = 0;
         
         for(char &ch:s){
-            mp[ch]++;
+            sum_s += ch;
         }
         
+        int sum_t = 0;
+        
         for(char &ch:t){
-            mp[ch]--;
-            if(mp[ch] < 0)
-                return ch;
+            sum_t += ch;
         }
-        return 'c'; // flow will never come here
+        
+        // sum_t > sum_s
+        
+        return (char)(sum_t - sum_s);
     }
 };
