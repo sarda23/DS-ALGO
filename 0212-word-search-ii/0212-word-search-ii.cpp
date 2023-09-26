@@ -42,7 +42,7 @@ public:
     
     vector<vector<int>> directions{{1,0},{-1,0},{0,1},{0,-1}};
     
-    void findwords(vector<vector<char>>& board,int i,int j,trieNode* root){
+    void findtrie(vector<vector<char>>& board,int i,int j,trieNode* root){
         if(i<0 or j<0 or i>=n or j>=m)
             return;
         
@@ -69,13 +69,10 @@ public:
             int new_i = i + dir[0];
             int new_j = j + dir[1];
             
-            findwords(board,new_i,new_j,root);
+            findtrie(board,new_i,new_j,root);
         }
         board[i][j] = temp;
-        
     }
-    
-    
     
     vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
         n = board.size(); // row
@@ -102,7 +99,7 @@ public:
                 if(root->children[ch-'a'] != NULL){
                     // words find kar kar ke res me add kar 
                     // dega using dfs
-                    findwords(board,i,j,root);
+                    findtrie(board,i,j,root);
                 }
             }
         }
