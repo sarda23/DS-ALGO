@@ -1,14 +1,10 @@
 class Solution {
 public:
+    static bool comp(int &a,int &b){
+        return a%2<b%2;
+    }
     vector<int> sortArrayByParity(vector<int>& nums) {
-        int j=0;
-        
-        for(int i=0;i<nums.size();i++){
-            if(nums[i] %2 == 0){
-                swap(nums[i],nums[j]);
-                j++;
-            }
-        }
+        sort(begin(nums),end(nums),comp);
         return nums;
     }
 };
