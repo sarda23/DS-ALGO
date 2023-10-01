@@ -6,11 +6,9 @@ public:
         
         int res = 0;
         
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(grid[i][j] < 0)
-                    res++;
-            }
+        for(auto &row:grid){
+            int idx = upper_bound(begin(row),end(row),0,greater<int>()) - begin(row);
+            res += (m-idx);
         }
         return res;
     }
