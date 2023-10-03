@@ -6,14 +6,13 @@ public:
         
         unordered_map<int,int>mp;
         
-        for(auto &i:nums)
+        for(auto &i:nums){
+            if(mp.find(i) != mp.end()){
+                ans += mp[i];
+            }
             mp[i]++;
-        
-        for(auto &it:mp){
-            int t = it.second;
-            ans += t*(t-1)/2;
-            
         }
+                    
         return ans;
     }
 };
