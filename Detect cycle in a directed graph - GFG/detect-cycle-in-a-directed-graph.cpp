@@ -5,34 +5,46 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-  
-    bool solve(vector<int>adj[],int u,vector<bool>&vis,vector<bool>&in){
-        vis[u] = true;
-        in[u]      = true;
-        
-        for(int &v:adj[u]){
-            // not visited
-            if(vis[v] == false && solve(adj,v,vis,in)){
-                return true;
-            }else if(in[v] == true) // visited hai and curr recur me bhi hai
-                return true;
-        }
-        in[u] = false;
-        return false;
-        
-    }
     // Function to detect cycle in a directed graph.
-    bool isCyclic(int V, vector<int> adj[]) {
+    bool isCyclic(int N, vector<int> adj[]) {
         // code here
-        vector<bool>visited(V,false);
-        vector<bool>inrecur(V,false);
+        queue<int>q;
         
-        for(int i=0;i<V;i++){
-            if(!visited[i] && solve(adj,i,visited,inrecur))
-                return true;
+        vector<int>in(N,0);
+        
+        for(int u=0;u<N;u++){
+            for(int &v:adj[u]){
+                in[v]++;
+            }
+        }
+        int c=0;
+        for(int i=0;i<N;i++){
+            if(in[i] == 0){
+                q.push(i);
+                c++;
+            }
         }
         
-        return false;
+        // simple BFS
+        
+        while(!q.empty()){
+            int u = q.front();
+            q.pop();
+            
+            for(int &v:adj[u]){
+                in[v]--;
+                
+                if(in[v] == 0){
+                    q.push(v);
+                    c++;
+                }
+            }
+        }
+        
+        if(c == N)
+            return false;
+            
+        return true;
     }
 };
 
