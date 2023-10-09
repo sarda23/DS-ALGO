@@ -39,7 +39,7 @@ class Solution {
         
         for(int i=0;i<V;i++){
             parent[i] = i;
-            rank[i] = 1;
+            rank[i] = 0;
         }
         for(int u=0;u<V;u++){
             for(int &v:adj[u]){
