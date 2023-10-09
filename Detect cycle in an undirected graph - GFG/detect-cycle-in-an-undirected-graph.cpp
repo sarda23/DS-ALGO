@@ -6,39 +6,52 @@ using namespace std;
 class Solution {
   public:
     // Function to detect cycle in an undirected graph.
-    bool solve(vector<int>adj[],int u,vector<bool>&visited){
-        queue<pair<int,int>>q;
-        q.push({u,-1});
-        
-        visited[u] = true;
-        
-        while(!q.empty()){
-            pair<int,int>P = q.front();
-            q.pop();
+    vector<int>parent;
+    vector<int>rank;
+    
+    int find(int x){
+        if(x == parent[x])
+            return x;
             
-            int source = P.first;
-            int parent = P.second;
-            
-            for(int &v:adj[source]){
-                if(visited[v] == false){
-                    visited[v] = true;
-                    q.push({v,source});
-                }else if(v != parent){
-                    return true;
-                }
-            }
-        }
-        return false;
+        return parent[x] = find(parent[x]);
     }
     
+    void Union(int x,int y){
+        int x_parent = parent[x];
+        int y_parent = parent[y];
+        
+        if(x_parent == y_parent)
+            return;
+        
+        if(rank[x_parent] < rank[y_parent])
+            parent[x_parent] = y_parent;
+        else if(rank[x_parent] > rank[y_parent])
+            parent[y_parent] = x_parent;
+        else{
+            parent[x_parent] = y_parent;
+            rank[y_parent] += 1;
+        }
+    }
     bool isCycle(int V, vector<int> adj[]) {
         // Code here
-        vector<bool>visited(V,false);
+        parent.resize(V);
+        rank.resize(V);
         
         for(int i=0;i<V;i++){
-            // can be disconnected graph so all nodes 
-            if(!visited[i] and solve(adj,i,visited)){
-                return true;
+            parent[i] = i;
+            rank[i] = 1;
+        }
+        for(int u=0;u<V;u++){
+            for(int &v:adj[u]){
+                if(u<v){
+                    int parent_u = find(u);
+                    int parent_v = find(v);
+                    
+                    if(parent_u == parent_v)
+                        return true;
+                        
+                    Union(u,v);
+                }
             }
         }
         return false;
