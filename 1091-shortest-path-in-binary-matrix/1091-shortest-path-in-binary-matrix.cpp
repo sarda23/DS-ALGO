@@ -1,5 +1,7 @@
 class Solution {
 public:
+    typedef pair<int,pair<int,int>>P;
+    
     vector<vector<int>>directions{{1,1},{0,1},{1,0},{-1,0},{0,-1},{-1,-1},{1,-1},{-1,1}};
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
         int n = grid.size();
@@ -12,38 +14,35 @@ public:
             return x >=0 && x<n && y>=0 &&y<m;
         };
         
-        queue<pair<int,int>>q;
-        q.push({0,0});
-        grid[0][0] = 1;
+        vector<vector<int>>res(n,vector<int>(m,INT_MAX));
         
-        int level = 0;
+        priority_queue<P,vector<P>,greater<P>>pq;
         
-        while(!q.empty()){
-            int sz = q.size();
+        pq.push({0,{0,0}});
+        res[0][0] = 0;
+        
+        while(!pq.empty()){
+            int d = pq.top().first;
+            pair<int,int>node = pq.top().second;
+            int x = node.first;
+            int y = node.second;
+            pq.pop();
             
-            while(sz--){
+            for(auto &dir:directions){
+                int x_ = x + dir[0];
+                int y_ = y + dir[1];
                 
-                auto curr = q.front();
-                q.pop();
+                int dist = 1;
                 
-                int x = curr.first;
-                int y = curr.second;
-                
-                if(x == n-1 && y == m-1)
-                    return level + 1;
-                
-                for(auto &dir:directions){
-                    int x_ = x + dir[0];
-                    int y_ = y + dir[1];
-                    
-                    if(isSafe(x_,y_) && grid[x_][y_] == 0){
-                        q.push({x_,y_});
-                        grid[x_][y_] = 1;
-                    }
+                if(isSafe(x_,y_) && grid[x_][y_] == 0 && d + dist < res[x_][y_]){
+                    pq.push({d+dist,{x_,y_}});
+                    res[x_][y_] = d + dist;
                 }
             }
-            level++;
         }
-        return -1;
+        if(res[n-1][m-1] == INT_MAX)
+            return -1;
+        
+        return res[n-1][m-1] + 1;
     }
 };
