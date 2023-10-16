@@ -1,16 +1,19 @@
 class Solution {
 public:
     vector<int> getRow(int rowIndex) {
-        vector<vector<int>>res(rowIndex+1);
+        vector<int>prev;
 
         for(int i=0;i<rowIndex+1;i++){
             //ith row me i+1 element hai
-            res[i] = vector<int>(i+1,1);
-
+            
+            vector<int>curr(i+1,1);
+            
             for(int j =1;j<i;j++){
-                res[i][j] = res[i-1][j] + res[i-1][j-1];
+                curr[j] = prev[j] + prev[j-1];
             }
+            
+            prev = curr;
         }
-        return res[rowIndex];
+        return prev;
     }
 };
