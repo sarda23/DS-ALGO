@@ -11,31 +11,34 @@
  */
 class Solution {
 public:
-    unordered_map<int,int>mp;
+    int currN=0,currF = 0,maxF = 0;
+    vector<int>res;
+    
     void dfs(TreeNode* root){
-        if(!root)
+        if(!root){
             return;
-        
+        }
         dfs(root->left);
-        mp[root->val]++;
+        
+        if(root->val == currN){
+            currF++;
+        }else{
+            currN = root->val;
+            currF=1;
+        }
+        if(currF > maxF){
+            res = {};
+            maxF = currF;
+        }
+        if(currF == maxF){
+            res.push_back(root->val);
+        }
         dfs(root->right);
     }
+    
     vector<int> findMode(TreeNode* root) {
         dfs(root);
         
-        vector<int>res;
-        int maxF=0;
-        
-        for(auto &it:mp){
-            if(it.second > maxF){
-                maxF = it.second;
-                res = {};
-                res.push_back(it.first);
-                
-            }else if(it.second == maxF){
-                res.push_back(it.first);
-            }
-        }
         return res;
     }
 };
