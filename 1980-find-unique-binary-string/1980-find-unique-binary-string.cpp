@@ -1,18 +1,25 @@
 class Solution {
 public:
     string findDifferentBinaryString(vector<string>& nums) {
-        int n = nums.size();
+        unordered_set<int>st;
         
-        string ans;
-        for(int i=0;i<n;i++){
-            
-            char ch = nums[i][i];
-            if(ch == '0')
-                ans += '1';
-            else
-                ans += '0';
+        for(string &num:nums){
+            st.insert(stoi(num,0,2)); // string to num - if string is binary-- 2
+            // 2 ka matlab woh binary string hai
         }
         
-        return ans;
+        int n = nums.size();
+        
+        string res = "";
+        
+        for(int num =0; num<=n;num++){
+            if(st.find(num) == st.end()){
+                res = bitset<16>(num).to_string();
+                
+                return res.substr(16-n,n);
+            }
+        }
+        
+        return "";
     }
 };
