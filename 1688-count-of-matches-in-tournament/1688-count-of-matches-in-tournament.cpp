@@ -1,6 +1,7 @@
 class Solution {
 public:
     int numberOfMatches(int n) {
+        /*
         int match  = 0;
         int remain = n;
         while(remain > 1){
@@ -13,7 +14,8 @@ public:
                 remain = (remain-1)/2 + 1;
             }
         }
-        
         return match;
+        */
+        return n-1;
     }
 };
