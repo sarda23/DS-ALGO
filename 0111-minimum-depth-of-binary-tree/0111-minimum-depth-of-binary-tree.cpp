@@ -15,32 +15,15 @@ public:
         if(root == NULL)
             return 0;
         
-        queue<TreeNode*> q;
-        q.push(root);
+        if(!root->left && !root->right)
+            return 1;
         
-        int depth = 1;
+        // DFS
         
-        while(!q.empty()){
-            int n = q.size();
-            
-            while(n--){
-                TreeNode* temp = q.front();
-                q.pop();
-                
-                if(temp->left == NULL and temp->right == NULL)
-                    return depth;
-                
-                if(temp->left){
-                    q.push(temp->left);
-                }
-                if(temp->right){
-                    q.push(temp->right);
-                }
-            }
-            
-            depth++;
-        }
+        int left = root->left != NULL ? minDepth(root->left):INT_MAX;
         
-        return -1;
+        int right = root->right != NULL ? minDepth(root->right):INT_MAX;
+        
+        return 1 + min(left,right); 
     }
 };
