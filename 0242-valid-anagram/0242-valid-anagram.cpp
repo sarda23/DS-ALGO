@@ -1,10 +1,20 @@
 class Solution {
 public:
     bool isAnagram(string s, string t) {
+        vector<int> count(26,0);
         
-        sort(begin(s),end(s));
-        sort(begin(t),end(t));
+        for(char &ch:s){
+            count[ch-'a']++;
+        }
         
-        return s == t;
+        for(char &ch:t){
+            count[ch-'a']--;
+        }
+        
+        bool allzero = all_of(begin(count),end(count),[](int element){
+            return element == 0;
+        });
+        
+        return allzero;
     }
 };
